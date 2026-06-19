@@ -22,13 +22,19 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; }
+  html, body {
+    overflow-x: hidden;
+  }
+
+  html { 
+    /* Allows smooth scrolling on desktop, but prevents the scroll-freeze bug on mobile */
+    scroll-behavior: smooth; 
+  }
 
   body {
     font-family: 'Jost', sans-serif;
     background: var(--ivory);
     color: var(--text-dark);
-    overflow-x: hidden;
     cursor: default;
     /* Force body to top to override Google Translate banner without breaking layout */
     top: 0px !important; 
@@ -117,9 +123,11 @@
   }
 
   /* ─── HERO ─── */
+  /* ─── HERO ─── */
   #hero {
     position: relative;
-    min-height: 100vh;
+    /* Use dynamic viewport height so the button isn't hidden behind mobile address bars */
+    min-height: 100dvh; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1431,7 +1439,7 @@ function googleTranslateElementInit() {
       left: ${left}%;
       animation-duration: ${duration}s;
       animation-delay: -${delay}s;
-      filter: blur(0.5px);
+      will-change: transform, opacity; /* Tells the browser to optimize this animation */
     `;
     canvas.appendChild(petal);
 
